@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,10 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static java.lang.System.out;
-import static java.util.stream.Stream.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.params.provider.Arguments.of;
 import static org.mockito.ArgumentMatchers.startsWith;
 import static ru.netology.geo.GeoServiceImpl.*;
 
@@ -28,7 +24,7 @@ public class MessageSenderTests {
 
     @ParameterizedTest
     @MethodSource("argumentsSource")
-    void tests_to_check_geo_service(Location expectedLocation, String ip) {
+    void tests_to_check_geo_service_byIp(Location expectedLocation, String ip) {
         GeoService geoService = new GeoServiceImpl();
         Location resultLocation;
 
@@ -113,6 +109,19 @@ public class MessageSenderTests {
                 Arguments.of(engMsg, "96.44.135.45"));
     }
 
+    @Test
+    void tests_to_check_geo_service_byCoordinates() {
+        double latitude = 0;
+        double longitude = 0;
+        GeoService geoService = new GeoServiceImpl();
 
+        RuntimeException thrown = assertThrows(
+                    RuntimeException.class,
+                    () -> geoService.byCoordinates(latitude, longitude),
+                    "Not implemented"
+            );
+
+        assertTrue(thrown.getMessage().contains("Not implemented"));
+        }
 }
 
