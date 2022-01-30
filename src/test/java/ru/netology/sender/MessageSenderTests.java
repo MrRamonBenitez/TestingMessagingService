@@ -1,4 +1,5 @@
-import org.junit.jupiter.api.Assertions;
+package ru.netology.sender;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,8 +11,6 @@ import ru.netology.geo.GeoService;
 import ru.netology.geo.GeoServiceImpl;
 import ru.netology.i18n.LocalizationService;
 import ru.netology.i18n.LocalizationServiceImpl;
-import ru.netology.sender.MessageSender;
-import ru.netology.sender.MessageSenderImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,44 +21,6 @@ import static org.mockito.ArgumentMatchers.startsWith;
 import static ru.netology.geo.GeoServiceImpl.*;
 
 public class MessageSenderTests {
-
-    @ParameterizedTest
-    @MethodSource("argumentsSource")
-    void tests_to_check_geo_service_byIp(Location expectedLocation, String ip) {
-        GeoService geoService = new GeoServiceImpl();
-        Location resultLocation;
-
-        resultLocation = geoService.byIp(ip);
-
-        assertEquals(expectedLocation, resultLocation);
-
-    }
-
-    private static Stream<Arguments> argumentsSource() {
-        return Stream.of(Arguments.of(new Location(null, null, null, 0), LOCALHOST,
-                Arguments.of(new Location("Moscow", Country.RUSSIA, "Lenina", 15), MOSCOW_IP),
-                Arguments.of(new Location("New York", Country.USA, " 10th Avenue", 32), NEW_YORK_IP),
-                Arguments.of(new Location("Moscow", Country.RUSSIA, null, 0), "172.0.43.12"),
-                Arguments.of(new Location("New York", Country.USA, null, 0), "96.45.101.111")));
-    }
-
-    @ParameterizedTest
-    @MethodSource("countrySource")
-    void tests_to_check_localization_service(String expectedMsg, Country country) {
-        LocalizationService localizationService = new LocalizationServiceImpl();
-        String resultMsg;
-
-        resultMsg = localizationService.locale(country);
-
-        assertEquals(resultMsg, expectedMsg);
-    }
-
-    private static Stream<Arguments> countrySource() {
-        return Stream.of(Arguments.of("Добро пожаловать", Country.RUSSIA),
-                         Arguments.of("Welcome", Country.USA),
-                         Arguments.of("Welcome", Country.BRAZIL),
-                         Arguments.of("Welcome", Country.GERMANY));
-    }
 
     @ParameterizedTest
     @MethodSource("ipSource")
@@ -116,5 +77,6 @@ public class MessageSenderTests {
         assertThrows(RuntimeException.class,
                 () -> geoService.byCoordinates(Mockito.any(), Mockito.any()));
     }
+
 }
 
