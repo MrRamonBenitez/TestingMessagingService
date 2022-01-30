@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -110,18 +111,10 @@ public class MessageSenderTests {
     }
 
     @Test
-    void tests_to_check_geo_service_byCoordinates() {
-        double latitude = 0;
-        double longitude = 0;
+    void coordinateThrowTest() {
         GeoService geoService = new GeoServiceImpl();
-
-        RuntimeException thrown = assertThrows(
-                    RuntimeException.class,
-                    () -> geoService.byCoordinates(latitude, longitude),
-                    "Not implemented"
-            );
-
-        assertTrue(thrown.getMessage().contains("Not implemented"));
-        }
+        assertThrows(RuntimeException.class,
+                () -> geoService.byCoordinates(Mockito.any(), Mockito.any()));
+    }
 }
 
