@@ -1,6 +1,5 @@
 package ru.netology.sender;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,7 +17,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.startsWith;
-import static ru.netology.geo.GeoServiceImpl.*;
+
 
 public class MessageSenderTests {
 
@@ -69,13 +68,6 @@ public class MessageSenderTests {
                 Arguments.of(engMsg, "96.44.111.1"),
                 Arguments.of(engMsg, "96.44.133.3"),
                 Arguments.of(engMsg, "96.44.135.45"));
-    }
-
-    @Test
-    void coordinateThrowTest() {
-        GeoService geoService = new GeoServiceImpl();
-        assertThrows(RuntimeException.class,
-                () -> geoService.byCoordinates(Mockito.any(), Mockito.any()));
     }
 
 }
